@@ -19,7 +19,7 @@ jobs:
       shell: bash
 
   steps:
-  # checkout the repository to the GitHub Actions runner
+  # Checkout the repository to the GitHub Actions runner
   - name: Checkout
     uses: actions/checkout@v2
 
@@ -33,14 +33,14 @@ jobs:
     env:
       GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-  # Generates an excution plan for Terraform
+  # Generates an execution plan for Terraform
   - name: Terraform Plan
     run: terraform plan -lock=false
     env:
       GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-  # On push to main, build or change infrastruture according to Terraform configuration files
-  # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation an "strict" required status checks for mare information
+  # On push to main, build or change infrastructure according to Terraform configuration files
+  # Note: It is recommended to set up a required strict status check in your repository for Terraform Cloud. See the documentation a strict required status checks for mare information
   - name: Terraform Apply
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     run: terraform apply -auto-approve
